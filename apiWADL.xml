@@ -1,0 +1,1187 @@
+<?xml version="1.0"?>
+<application xmlns="http://wadl.dev.java.net/2009/02"
+	xmlns:apigee="http://api.apigee.com/wadl/2010/07/" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://wadl.dev.java.net/2009/02 ../../resources/wadl-schema.xsd http://api.apigee.com/wadl/2010/07/ ../../resources/apigee-wadl-extensions.xsd">
+	<!-- Base defines the domain and base path of the endpoint -->
+    <resources base="http://mxmerchant-prod.apigee.net/v1">
+		<resource path="/echo">
+			<method id="echo" name="GET" apigee:displayName="Echo">
+				<apigee:tags>
+					<apigee:tag primary="true">Echo</apigee:tag>
+				</apigee:tags>
+				<apigee:authentication required="false" />
+				<apigee:example url="/echo?repeat=text" />
+				<doc title=""
+					apigee:url="http://mxmerchant.apiportal.apigee.com/api-docs">
+					Returns an echo of the message sent
+				</doc>
+				<request>
+                    <param name="repeat" required="true" style="query" type="xsd:string" default="Test message">
+                        <doc>Text to echo</doc>
+                    </param>
+                </request>
+			</method>
+            <method id="echoReverse" name="GET" apigee:displayName="Echo Reverse">
+				<apigee:tags>
+					<apigee:tag primary="true">Echo</apigee:tag>
+				</apigee:tags>
+				<apigee:authentication required="false" />
+				<apigee:example url="/echo?reverse=text" />
+				<doc title=""
+					apigee:url="http://mxmerchant.apiportal.apigee.com/api-docs">
+					Returns an echo of the message sent
+				</doc>
+				<request>
+                    <param name="reverse" required="true" style="query" type="xsd:string" default="Test message">
+                        <doc>Text to echo in reverse</doc>
+                    </param>
+                </request>
+			</method>
+
+		</resource>
+        
+        <resource path="/customer">
+            <method id="getCustomers" name="GET" apigee:displayName="Search Customers">
+				<apigee:tags>
+					<apigee:tag primary="true">Customer</apigee:tag>
+				</apigee:tags>
+				<apigee:authentication required="true" />
+				<apigee:example url="Customer?value=0&amp;limit=10&amp;offset=0&amp;sortField=null&amp;ascending=true" />
+				<doc title=""
+					apigee:url="http://mxmerchant.apiportal.apigee.com/api-docs">
+					Get Customers
+				</doc>
+				<request>
+                    <param name="value" required="false" style="query" type="xsd:string">
+                        <doc>Search criteria</doc>
+                    </param>
+                    <param name="limit" required="false" style="query" type="xsd:int" default="10">
+                        <doc>The maximum number of records displayed</doc>
+                    </param>
+                    <param name="offset" required="false" style="query" type="xsd:int" default="0">
+                        <doc>The intial record number to start with</doc>
+                    </param>
+                    <param name="sortField" required="false" style="query" type="xsd:string">
+                           <doc>Field Sorting</doc>
+                    </param>
+                    <param name="ascending" required="false" style="query" type="xsd:boolean" default="false">
+                        <doc>Ascension</doc>
+                    </param>
+				</request>
+			</method>
+            
+            <method id="createCustomer" name="POST" apigee:displayName="Create Customer">
+                <apigee:tags>
+					<apigee:tag primary="true">Customer</apigee:tag>
+				</apigee:tags>
+				<apigee:authentication required="true" />
+				<apigee:example url="Customer" />
+				<doc title=""
+					apigee:url="http://mxmerchant.apiportal.apigee.com/api-docs">
+					Create Customer
+				</doc>
+				<request>
+                    <param name="Content-Type" required="true" style="header" default="application/json"/>
+                    <representation>
+                        <apigee:payload required="true">
+                            <doc apigee:url="http://mxmerchant.apiportal.apigee.com/api-docs">Customer object</doc>
+                            <apigee:content>
+                                {"alias":"John Smith","email":"person@email.com","cellPhone":"5554123444","homePhone":"5554123444","note":"example note","number":"123451","addresses":[{"addressLine1":"123 smith Ave","city":"New York","zip":"30127"}]}
+                            </apigee:content>
+                        </apigee:payload>
+                    </representation>
+				</request>
+			</method>
+        </resource>
+            
+        <resource path="/customer/{id}">
+            <param name="id" required="true" style="template" type="xsd:string">
+                <doc>The guid id of the desired resource</doc>
+            </param>
+                
+            <method id="getCustomer" name="GET" apigee:displayName="Get Customer">
+                <apigee:tags>
+                    <apigee:tag primary="true">Customer</apigee:tag>
+                </apigee:tags>
+                <apigee:authentication required="true"/>
+                
+                <apigee:example url="Customer/00000000-0000-0000-0000-000000000000"/>
+                    
+                <doc title="" apigee:url="http://mxmerchant.apiportal.apigee.com/api-docs">
+                    Get Customer
+                </doc>
+            </method>
+             
+            <method id="updateCustomer" name="PUT" apigee:displayName="Update Customer">
+                <apigee:tags>
+					<apigee:tag primary="true">Customer</apigee:tag>
+				</apigee:tags>
+				<apigee:authentication required="true" />
+				<apigee:example url="Customer" />
+				<doc title=""
+					apigee:url="http://mxmerchant.apiportal.apigee.com/api-docs">
+					Update Customer
+				</doc>
+				<request>
+                    <param name="Content-Type" required="true" style="header" default="application/json"/>
+                    <representation>
+                        <apigee:payload required="true">
+                            <doc apigee:url="http://mxmerchant.apiportal.apigee.com/api-docs">Customer object</doc>
+                            <apigee:content>
+                                {"alias":"John Smith","email":"person@email.com","cellPhone":"5554123444","homePhone":"5554123444","note":"example note","number":"123451","addresses":[{"addressLine1":"123 smith Ave","city":"New York","zip":"30127"}]}
+                            </apigee:content>
+                        </apigee:payload>
+                    </representation>
+				</request>
+			</method>
+            
+            <method id="deleteCustomer" name="DELETE" apigee:displayName="Delete Customer">
+                <apigee:tags>
+                    <apigee:tag primary="true">Customer</apigee:tag>
+                </apigee:tags>
+                
+                <apigee:authentication required="true"/>
+                
+                <apigee:example url="Customer/00000000-0000-0000-0000-000000000000"/>
+                
+                <doc title=""
+					apigee:url="http://mxmerchant.apiportal.apigee.com/api-docs">
+					Get Customer
+				</doc>
+            </method>
+        </resource>
+    
+        <!--ORDER-->
+        <resource path="/order">
+            
+            <method id="GetMerchantOrders" name="GET" apigee:displayName="Get Merchant Orders">
+				<apigee:tags>
+					<apigee:tag primary="true">Order</apigee:tag>
+				</apigee:tags>
+				<apigee:authentication required="true" />
+				<apigee:example url="order?merchantId=0&amp;limit=10&amp;offset=0" />
+				<doc title=""
+					apigee:url="http://mxmerchant.apiportal.apigee.com/api-docs">
+					Get Merchant Orders
+				</doc>
+				<request>
+                    <param name="merchantId" required="true" style="query" type="xsd:int">
+                        <doc>Merchant identification number</doc>
+                    </param>
+                    <param name="limit" required="false" style="query" type="xsd:int" default="10">
+                        <doc>The maximum number of records displayed</doc>
+                    </param>
+                    <param name="offset" required="false" style="query" type="xsd:int" default="0">
+                        <doc>The intial record number to start with</doc>
+                    </param>
+				</request>
+			</method>
+            
+            <method id="GetOrders" name="GET" apigee:displayName="Get Orders">
+				<apigee:tags>
+					<apigee:tag primary="true">Order</apigee:tag>
+				</apigee:tags>
+				<apigee:authentication required="true" />
+				<apigee:example url="order?limit=10&amp;offset=0" />
+				<doc title=""
+					apigee:url="http://mxmerchant.apiportal.apigee.com/api-docs">
+					Get Orders
+				</doc>
+				<request>
+                    <param name="searchType" required="false" style="query" type="xsd:string">
+                        <doc>Specifies the type of information to search through.</doc>
+                        <option value="" />
+                        <option value="Account" />
+                        <option value="Email" />
+                        <option value="Receipt" />
+                        <option value="Customer" />
+                        <option value="Invoices" />
+                        <option value="Recent" />
+                        <option value="InvoiceNumber" />
+                        <option value="PhoneNumber" />
+                        <option value="PurchaseOrderNumber" />
+                        <option value="CustomerId" />
+                    </param>
+                    <param name="searchValue" required="false" style="query" type="xsd:string">
+                        <doc>The Word/phrase you are searching for</doc>
+                    </param>
+                    <param name="startDate" required="false" style="query" type="xsd:date">
+                        <doc>Starting date</doc>
+                    </param>
+                    <param name="endDate" required="false" style="query" type="xsd:date">
+                        <doc>Ending date</doc>
+                    </param>
+                    <param name="limit" required="false" style="query" type="xsd:int" default="10">
+                        <doc>The maximum number of records displayed</doc>
+                    </param>
+                    <param name="offset" required="false" style="query" type="xsd:int" default="0">
+                        <doc>The intial record number to start with</doc>
+                    </param>
+				</request>
+			</method>
+            
+            <method id="CreateOrder" name="POST" apigee:displayName="Create Order">				
+                <apigee:tags>
+					<apigee:tag primary="true">Order</apigee:tag>
+				</apigee:tags>
+				<apigee:authentication required="true" />
+				<apigee:example url="order?merchantId=1" />
+				<doc title=""
+					apigee:url="http://mxmerchant.apiportal.apigee.com/api-docs">
+					Create an Order
+				</doc>
+				<request>
+                    <param name="merchantId" required="true" style="query" type="xsd:int">
+                        <doc>Id of the merchant the order will be created under</doc>
+                    </param>
+                    <param name="Content-Type" required="true" style="header" default="application/json"/>
+                    <representation>
+                        <apigee:payload required="true">
+                            <doc apigee:url="http://mxmerchant.apiportal.apigee.com/api-docs">Order object</doc>
+                            <apigee:content>
+                                {"merchantId":48200,"type":"Sale","memo":"Memo 101","quantity":0,"totalAmount":"11","taxAmount":"0","subTotalAmount":"11","discountAmount":"0","balance":"11","purchaseOrderNumber":"PO101","invoiceDate":"2012-11-27T17:00:00Z","purchases":[{"productName":"Accelerade 30 Serving (AC0730)","description":"Accelerade 30 Serving (AC0730)","brand":"Pacific Health Labs","style":"Mountain Berry","quantity":1,"price":"10","discountAmount":"0","subTotalAmount":"10","taxRate":"0","taxAmount":"0","totalAmount":"10","trackingNumber":0,"productVariant":{"id":"d7662d9a-fae3-4161-b145-92d27dd2a4fb","dateCreated":"2012-11-15T17:19:38.643Z","variantName":"Variant Name","price":"10","cost":"10","tags":"flavor:testing,gender:male,size:10","photos":{"id":"10e415fd-3a4a-469d-9b68-beab6e374420","variantId":"d7662d9a-fae3-4161-b145-92d27dd2a4fb","name":"customer-v1106.png","data":"","thumbnail":"","size":169672,"format":"image/png"}},"taxes":[],"discounts":[]},{"productName":"Testing Quick Add","description":"QuickAdd","quantity":1,"price":"1","discountAmount":"0","subTotalAmount":"1","taxRate":"0","taxAmount":"0","totalAmount":"1","trackingNumber":0,"taxes":[],"discounts":[]}],"discounts":[],"customer":{"id":"00000000-0000-0000-0000-000000000000","alias":"Mob Boss","number":"518","note":"note 101","isLoyaltyEnrolled":false,"addresses":[{"addressLine1":"1234 Trek ST","city":"Roswell","state":"GA","zip":"30076"}],"orderCount":0,"orderAmount":"0","lastOrderDate":"2012-11-27T02:46:59.8785882Z","receiveEmailPromotions":false,"receiveCellPhonePromotions":false,"recordCount":0},"billingAddress":{"addressLine1":"1234 Trek ST","city":"Roswell","state":"GA","zip":"30076"},"shippingAddress":{"addressLine1":"1234 Trek ST","city":"Roswell","state":"GA","zip":"30076"}}
+                            </apigee:content>
+                        </apigee:payload>
+                    </representation>
+				</request>
+			</method>
+        </resource>
+        
+        <!-- ORDER with {id}   -->
+        <resource path="/order/{id} ">
+            <param name="id" required="true" style="template" type="xsd:string">
+                <doc>The guid id of the desired resource</doc>
+            </param>
+            
+            <method id="GetOrder" name="GET" apigee:displayName="Get Order">
+                <apigee:tags>
+                    <apigee:tag primary="true">Order</apigee:tag>
+                </apigee:tags>
+                
+                <apigee:authentication required="true"/>
+                
+                <apigee:example url="order/00000000-0000-0000-0000-000000000000"/>
+                
+                <doc title=""
+					apigee:url="http://mxmerchant.apiportal.apigee.com/api-docs">
+					Get Order
+				</doc>
+            </method>
+            
+            <method id="DeleteOrder" name="DELETE" apigee:displayName="Delete Order">
+                <apigee:tags>
+                    <apigee:tag primary="true">Order</apigee:tag>
+                </apigee:tags>
+                
+                <apigee:authentication required="true"/>
+                
+                <apigee:example url="order/00000000-0000-0000-0000-000000000000"/>
+                
+                <doc title=""
+					apigee:url="http://mxmerchant.apiportal.apigee.com/api-docs">
+					Delete Order
+				</doc>
+            </method>
+            
+            <method id="updateOrder" name="PUT" apigee:displayName="Update Order">
+                <apigee:tags>
+                    <apigee:tag primary="true">Order</apigee:tag>
+                </apigee:tags>
+                
+                <apigee:authentication required="true"/>
+                
+                <apigee:example url="order/00000000-0000-0000-0000-000000000000"/>
+                
+                <doc title=""
+					apigee:url="http://mxmerchant.apiportal.apigee.com/api-docs">
+					Update the information of the order with the corresponding Id
+				</doc>
+                
+				<request>
+                    <param name="Content-Type" required="true" style="header" default="application/json"/>
+                    <representation>
+                        <apigee:payload required="true">
+                            <doc apigee:url="http://mxmerchant.apiportal.apigee.com/api-docs">Order object</doc>
+                            <apigee:content>
+                                {"merchantId":48200,"type":"Sale","memo":"Memo 101","quantity":0,"totalAmount":"11","taxAmount":"0","subTotalAmount":"11","discountAmount":"0","balance":"11","purchaseOrderNumber":"PO101","invoiceDate":"2012-11-27T17:00:00Z","purchases":[{"productName":"Accelerade 30 Serving (AC0730)","description":"Accelerade 30 Serving (AC0730)","brand":"Pacific Health Labs","style":"Mountain Berry","quantity":1,"price":"10","discountAmount":"0","subTotalAmount":"10","taxRate":"0","taxAmount":"0","totalAmount":"10","trackingNumber":0,"productVariant":{"id":"d7662d9a-fae3-4161-b145-92d27dd2a4fb","dateCreated":"2012-11-15T17:19:38.643Z","variantName":"Variant Name","price":"10","cost":"10","tags":"flavor:testing,gender:male,size:10","photos":{"id":"10e415fd-3a4a-469d-9b68-beab6e374420","variantId":"d7662d9a-fae3-4161-b145-92d27dd2a4fb","name":"customer-v1106.png","data":"","thumbnail":"","size":169672,"format":"image/png"}},"taxes":[],"discounts":[]},{"productName":"Testing Quick Add","description":"QuickAdd","quantity":1,"price":"1","discountAmount":"0","subTotalAmount":"1","taxRate":"0","taxAmount":"0","totalAmount":"1","trackingNumber":0,"taxes":[],"discounts":[]}],"discounts":[],"customer":{"id":"00000000-0000-0000-0000-000000000000","alias":"Mob Boss","number":"518","note":"note 101","isLoyaltyEnrolled":false,"addresses":[{"addressLine1":"1234 Trek ST","city":"Roswell","state":"GA","zip":"30076"}],"orderCount":0,"orderAmount":"0","lastOrderDate":"2012-11-27T02:46:59.8785882Z","receiveEmailPromotions":false,"receiveCellPhonePromotions":false,"recordCount":0},"billingAddress":{"addressLine1":"1234 Trek ST","city":"Roswell","state":"GA","zip":"30076"},"shippingAddress":{"addressLine1":"1234 Trek ST","city":"Roswell","state":"GA","zip":"30076"}}
+                            </apigee:content>
+                        </apigee:payload>
+                    </representation>
+				</request>
+            </method>
+        </resource>
+        
+		<resource path="/payment">
+            
+            <method id="getAllPayments" name="GET" apigee:displayName="Get All Payments">
+				<apigee:tags>
+					<apigee:tag primary="true">Payment</apigee:tag>
+				</apigee:tags>
+				<apigee:authentication required="true" />
+				<apigee:example url="Customer?merchantId=100001333&amp;limit=10&amp;offset=0&amp;" />
+				<doc title=""
+					apigee:url="http://mxmerchant.apiportal.apigee.com/api-docs">
+					Get All Payments
+				</doc>
+				<request>
+                    <param name="merchantId" required="false" style="query" type="xsd:string">
+                        <doc>Merchant id</doc>
+                    </param>
+                    <param name="limit" required="false" style="query" type="xsd:int" default="10">
+                        <doc>The maximum number of records displayed</doc>
+                    </param>
+                    <param name="offset" required="false" style="query" type="xsd:int" default="0">
+                         <doc>The intial record number to start with</doc>
+                    </param>
+				</request>
+			</method>
+            
+            <method id="createPayment" name="POST" apigee:displayName="Create Payment">
+                <apigee:tags>
+					<apigee:tag primary="true">Payment</apigee:tag>
+				</apigee:tags>
+				<apigee:authentication required="true" />
+				<apigee:example url="Customer" />
+				<doc title=""
+					apigee:url="http://mxmerchant.apiportal.apigee.com/api-docs">
+					Create Payment
+				</doc>
+				<request>
+                    <param name="Content-Type" required="true" style="header" default="application/json"/>
+                    <representation>
+                        <apigee:payload required="true">
+                            <doc apigee:url="http://mxmerchant.apiportal.apigee.com/api-docs">Customer object</doc>
+                            <apigee:content>
+                                {
+                                "payment":"card",
+                                "paymentCard":{
+                                "accountNumber":"4744452112344444",
+                                "expirationMonth":"07",
+                                "expirationYear":"2018",
+                                "cvv":"123"
+                                },
+                                "taxAmount":"5",
+                                "totalAmount":"105"
+                                }
+                            </apigee:content>
+                        </apigee:payload>
+                    </representation>
+				</request>
+			</method>
+        </resource>
+        
+        <resource path="/payment/{id} ">
+            <param name="id" required="true" style="template" type="xsd:string">
+                <doc>The guid id of the desired resource</doc>
+            </param>
+                
+            <method id="getPayment" name="GET" apigee:displayName="Get Payment">
+                <apigee:tags>
+                    <apigee:tag primary="true">Payment</apigee:tag>
+                </apigee:tags>
+                    
+                <apigee:authentication required="true"/>
+                    
+                <apigee:example url="Payment/00000000-0000-0000-0000-000000000000"/>
+                    
+                <doc title=""
+                    apigee:url="http://mxmerchant.apiportal.apigee.com/api-docs">
+                    Get Payment
+                </doc>
+            </method>
+            
+            <method id="adjustPayment" name="PUT" apigee:displayName="Adjust Payment">
+                <apigee:tags>
+					<apigee:tag primary="true">Payment</apigee:tag>
+				</apigee:tags>
+				<apigee:authentication required="true" />
+				<apigee:example url="Payment/00000000-0000-0000-0000-000000000000" />
+				<doc title=""
+					apigee:url="http://mxmerchant.apiportal.apigee.com/api-docs">
+					Adjust Payment
+				</doc>
+				<request>
+                    <param name="Content-Type" required="true" style="header" default="application/json"/>
+                    <representation>
+                        <apigee:payload required="true">
+                            <doc apigee:url="http://mxmerchant.apiportal.apigee.com/api-docs">Payment object</doc>
+                            <apigee:content>
+                                {
+                                "payment":"card",
+                                "paymentCard":{
+                                "accountNumber":"4744452112344444",
+                                "expirationMonth":"07",
+                                "expirationYear":"2018",
+                                "cvv":"123"
+                                },
+                                "taxAmount":"5",
+                                "totalAmount":"105"
+                                }
+                            </apigee:content>
+                        </apigee:payload>
+                    </representation>
+				</request>
+			</method>
+            
+            <method id="deletePayment" name="DELETE" apigee:displayName="Delete Payment">
+                <apigee:tags>
+                    <apigee:tag primary="true">Payment</apigee:tag>
+                </apigee:tags>
+                
+                <apigee:authentication required="true"/>
+                
+                <apigee:example url="Payment/00000000-0000-0000-0000-000000000000"/>
+                
+                <doc title=""
+					apigee:url="http://mxmerchant.apiportal.apigee.com/api-docs">
+					Delete Payment
+				</doc>
+            </method>
+        </resource>
+        
+        
+        <resource path="/order/{id}/payment ">
+            <param name="id" required="true" style="template" type="xsd:string">
+                <doc>The guid id of the desired resource</doc>
+            </param>
+            
+            <method id="getOrderPayments" name="GET" apigee:displayName="Get Order Payments">
+                <apigee:tags>
+                    <apigee:tag primary="true">Order</apigee:tag>
+                    <apigee:tag>Payment</apigee:tag>
+                </apigee:tags>
+                
+                <apigee:authentication required="true"/>
+                
+                <apigee:example url="/order/00000000-0000-0000-0000-000000000000/payment"/>
+                
+                <doc title=""
+                    apigee:url="http://mxmerchant.apiportal.apigee.com/api-docs">
+                    Get Order Payments
+                </doc>
+            </method>
+            
+            <method id="createOrderPayment" name="POST" apigee:displayName="Create Order Payment">
+                <apigee:tags>
+                    <apigee:tag primary="true">Order</apigee:tag>                    
+                    <apigee:tag>Payment</apigee:tag>
+                </apigee:tags>
+                
+                <apigee:authentication required="true"/>
+                
+                <apigee:example url="order/00000000-0000-0000-0000-000000000000/payment?merchantId=100001333"/>
+                
+                <doc title=""
+                    apigee:url="http://mxmerchant.apiportal.apigee.com/api-docs">
+                    Create Order Payment
+                </doc>
+                <request>
+                    <param name="merchantId" required="true" style="query" type="xsd:int">
+                        <doc>Merchant identification number</doc>
+                    </param>
+                </request>
+            </method>            
+        </resource>
+        
+        <resource path="/order/{id}/receipt ">
+            <param name="id" required="true" style="template" type="xsd:string">
+                <doc>The guid id of the desired resource</doc>
+            </param>
+            
+            <method id="sendReceipt" name="POST" apigee:displayName="Send Receipt">
+                <apigee:tags>
+					<apigee:tag primary="true">Order</apigee:tag>
+                    <apigee:tag>Receipt</apigee:tag>
+				</apigee:tags>
+				<apigee:authentication required="true" />
+				<apigee:example url="orderreciept" />
+				<doc title=""
+					apigee:url="http://mxmerchant.apiportal.apigee.com/api-docs">
+					Send a reciept via SMS/Email
+				</doc>
+				<request>
+                    <param name="Content-Type" required="true" style="header" default="application/json"/>
+				</request>
+			</method>
+        </resource>
+        
+        <resource path="/order/{id}/product ">
+            <param name="id" required="true" style="template" type="xsd:string">
+                <doc>The guid id of the desired resource</doc>
+            </param>
+            <method id="getOrderProduct" name="GET" apigee:displayName="Get Order Product">
+                <apigee:tags>
+                    <apigee:tag primary="true">Order</apigee:tag>
+                    <apigee:tag>Product</apigee:tag>
+                </apigee:tags>
+                
+                <apigee:authentication required="true"/>
+                
+                <apigee:example url="Order/00000000-0000-0000-0000-000000000000/Product"/>
+                
+                <doc title=""
+                    apigee:url="http://mxmerchant.apiportal.apigee.com/api-docs">
+                    Return list of all products in an order.
+                </doc>
+            </method>
+            <method id="createOrderProduct" name="POST" apigee:displayName="Create Order Product">
+                <apigee:tags>
+                    <apigee:tag primary="true">Order</apigee:tag>
+                    <apigee:tag>Product</apigee:tag>
+                </apigee:tags>
+				<apigee:authentication required="true" />
+				<apigee:example url="Order/00000000-0000-0000-0000-000000000000/Product" />
+				<doc title=""
+					apigee:url="http://mxmerchant.apiportal.apigee.com/api-docs">
+					Create product on an existing order.
+				</doc>
+				<request>
+                    <param name="Content-Type" required="true" style="header" default="application/json"/>
+                    <representation>
+                        <apigee:payload required="true">
+                            <doc apigee:url="http://mxmerchant.apiportal.apigee.com/api-docs">Order Object</doc>
+                            <apigee:content>
+                                {
+                                "productName": "nikeShoes",
+                                "price": "5",
+                                "trackingNumber": 123456,
+                                "taxes": [],
+                                "discounts": []
+                                }
+                            </apigee:content>
+                        </apigee:payload>
+                    </representation>
+				</request>
+			</method>
+        </resource>
+        
+        <resource path="/Order/{id}/Product?subid={subid}">
+            <param name="id" required="true" style="template" type="xsd:string">
+                <doc>The guid id of the entire order </doc>
+            </param>
+            <param name="subid" required="true" style="query" type="xsd:string">
+                <doc>The guid id of a specific product within an order</doc>
+            </param>
+            <method id="getIndOrderProduct" name="GET" apigee:displayName="Get individual Order Product">
+                <apigee:tags>
+                    <apigee:tag primary="true">Order</apigee:tag>
+                    <apigee:tag>Product</apigee:tag>
+                </apigee:tags>
+                
+                <apigee:authentication required="true"/>
+                
+                <apigee:example url="Order/00000000-0000-0000-0000-000000000000/Product?subid=32b5e4de-2db5-4715-b719-19d14ba9e923"/>
+                
+                <doc title=""
+                    apigee:url="http://mxmerchant.apiportal.apigee.com/api-docs">
+                    Return the specified product within an order.
+                </doc>
+            </method>
+            <method id="deleteIndOrderProduct" name="DELETE" apigee:displayName="Delete individual Order Product">
+                <apigee:tags>
+                    <apigee:tag primary="true">Order</apigee:tag>
+                    <apigee:tag>Product</apigee:tag>
+                </apigee:tags>
+                
+                <apigee:authentication required="true"/>
+                
+                <apigee:example url="Order/00000000-0000-0000-0000-000000000000/Product?subid=32b5e4de-2db5-4715-b719-19d14ba9e923"/>
+                
+                <doc title=""
+                    apigee:url="http://mxmerchant.apiportal.apigee.com/api-docs">
+                    Delete/remove the specified product within an order.
+                </doc>
+            </method>
+        </resource>
+        
+        
+         <resource path="/Order/{id}/History">
+             <param name="id" required="true" style="template" type="xsd:string">
+                 <doc>The guid id of the desired resource</doc>
+             </param>
+         
+             <method id="getOrderHistory" name="GET" apigee:displayName="Get Order History">
+                 <apigee:tags>
+                     <apigee:tag primary="true">Order</apigee:tag>
+                 </apigee:tags>
+             
+             <apigee:authentication required="true"/>
+             
+             <apigee:example url="Order/00000000-0000-0000-0000-000000000000/History"/>
+             
+             <doc title=""
+                 apigee:url="http://mxmerchant.apiportal.apigee.com/api-docs">
+                 Return payments on an order.
+             </doc>
+             </method>
+         
+         </resource>
+         
+        
+        <resource path="/Customer/{id}/Order">
+            <param name="id" required="true" style="template" type="xsd:string">
+                <doc>The guid id of the desired resource</doc>
+            </param>
+            
+            <method id="getCustomerOrder" name="GET" apigee:displayName="Get Customer Order">
+				<apigee:tags>
+					<apigee:tag primary="true">Customer</apigee:tag>
+                    <apigee:tag>Order</apigee:tag>
+				</apigee:tags>
+				<apigee:authentication required="true" />
+				<apigee:example url="Customer/756d7b48-a179-4a1b-a0b4-27de5f249667/Order?limit=10&amp;offset=0&amp;" />
+				<doc title=""
+					apigee:url="http://mxmerchant.apiportal.apigee.com/api-docs">
+					Get all Customer transactions
+				</doc>
+				<request>
+                    <param name="limit" required="false" style="query" type="xsd:int" default="10">
+                        <doc>The maximum number of records displayed</doc>
+                    </param>
+                    <param name="offset" required="false" style="query" type="xsd:int" default="0">
+                        <doc>The intial record number to start with</doc>
+                    </param>
+				</request>
+			</method>
+        </resource>
+        
+        <resource path="/order/{id}/discount ">
+            <param name="id" required="true" style="template" type="xsd:string">
+                <doc>The guid id of the desired resource</doc>
+            </param>
+            <method id="getOrderDiscount" name="GET" apigee:displayName="Get Order Discount">
+                <apigee:tags>
+                    
+                </apigee:tags>
+                
+                <apigee:authentication required="true"/>
+                
+                <apigee:example url="Order/00000000-0000-0000-0000-000000000000/Discount" />
+                
+                <doc title=""
+                    apigee:url="http://mxmerchant.apiportal.apigee.com/api-docs">
+                    Returns a transaction.
+                </doc>
+            </method>
+            <method id="createOrderDiscount" name="POST" apigee:displayName="Create Order Discount">
+                <apigee:tags>
+					<apigee:tag primary="true">Order</apigee:tag>
+                    <apigee:tag>Discount</apigee:tag>
+				</apigee:tags>
+				<apigee:authentication required="true" />
+				<apigee:example url="Order/00000000-0000-0000-0000-000000000000/Discount" />
+				<doc title=""
+					apigee:url="http://mxmerchant.apiportal.apigee.com/api-docs">
+					Add new coupon to an order.
+				</doc>
+				<request>
+                    <param name="Content-Type" required="true" style="header" default="application/json"/>
+                    <representation>
+                        <apigee:payload required="true">
+                            <doc apigee:url="http://mxmerchant.apiportal.apigee.com/api-docs">Order Object</doc>
+                            <apigee:content>
+                                {"_model":"discount","merchantId":100001322,"discountType":"Order","discountRateType":"Percent","discountApplicationType":"Coupon","name":"testDiscount222","rate":"5","startDate":"2012-11-29T05:00:00.000Z","endDate":"2012-11-29T05:00:00.000Z","tags":[],"value":"500.00%","validRange":"11/29/2012 - 11/29/2012","isNew":true,"errors":[]}
+                            </apigee:content>
+                        </apigee:payload>
+                    </representation>
+				</request>
+			</method>
+        </resource>
+        <resource path="/OrderDiscount/{id}?subid={subid}">
+            <param name="id" required="true" style="template" type="xsd:string">
+                <doc>The guid id of the entire order </doc>
+            </param>
+            <param name="subid" required="true" style="query" type="xsd:string">
+                <doc>The guid id of a specific product within an order</doc>
+            </param>
+            <method id="getIndOrderDiscount" name="GET" apigee:displayName="Get individual Order Discount">
+                <apigee:tags>
+                    <apigee:tag primary="true">Order</apigee:tag>
+                    <apigee:tag>Discount</apigee:tag>
+                </apigee:tags>
+                
+                <apigee:authentication required="true"/>
+                
+                <apigee:example url="Order/00000000-0000-0000-0000-000000000000/Discount?subid=32b5e4de-2db5-4715-b719-19d14ba9e923"/>
+                
+                <doc title=""
+                    apigee:url="http://mxmerchant.apiportal.apigee.com/api-docs">
+                    Return the specified product within an order.
+                </doc>
+            </method>
+            <method id="deleteIndOrderDiscount" name="DELETE" apigee:displayName="Delete individual Order Discount">
+                <apigee:tags>
+                    <apigee:tag primary="true">Order</apigee:tag>
+                    <apigee:tag>Discount</apigee:tag>
+                </apigee:tags>
+                
+                <apigee:authentication required="true"/>
+                
+                <apigee:example url="Order/00000000-0000-0000-0000-000000000000/Discount?subid=32b5e4de-2db5-4715-b719-19d14ba9e923"/>
+                
+                <doc title=""
+                    apigee:url="http://mxmerchant.apiportal.apigee.com/api-docs">
+                    Delete/remove the specified discount within an order.
+                </doc>
+            </method>
+        </resource>
+        
+        <resource path="/Discount/{id}">
+            <param name="id" required="true" style="template" type="xsd:string">
+                <doc>The guid id of the desired resource</doc>
+            </param>
+            
+            <method id="getDiscount" name="GET" apigee:displayName="Get Discount">
+				<apigee:tags>
+					<apigee:tag primary="true">Discount</apigee:tag>
+				</apigee:tags>
+				<apigee:authentication required="true" />
+				<apigee:example url="Discount/981df192-2e84-452b-ae18-1ce4cfc4b9a0" />
+				<doc title=""
+					apigee:url="http://mxmerchant.apiportal.apigee.com/api-docs">
+					Returns a discount
+				</doc>
+			</method>
+            
+            <method id="updateDiscount" name="PUT" apigee:displayName="Update Discount">
+                <apigee:tags>
+					<apigee:tag primary="true">Discount</apigee:tag>
+				</apigee:tags>
+				<apigee:authentication required="true" />
+				<apigee:example url="Discount/981df192-2e84-452b-ae18-1ce4cfc4b9a0" />
+				<doc title=""
+					apigee:url="http://mxmerchant.apiportal.apigee.com/api-docs">
+					Update existing discount
+				</doc>
+				<request>
+                    <param name="Content-Type" required="true" style="header" default="application/json"/>
+                    <representation>
+                        <apigee:payload required="true">
+                            <doc apigee:url="http://mxmerchant.apiportal.apigee.com/api-docs">Customer object</doc>
+                            <apigee:content>
+                                {
+                                "id": "981df192-2e84-452b-ae18-1ce4cfc4b9a0",
+                                "merchantId": 100001332,
+                                "dba": "PPS Demo 2",
+                                "discountType": "Item",
+                                "discountRateType": "Percent",
+                                "discountApplicationType": "Automatic",
+                                "name": "Half-Off Sale",
+                                "rate": "0.5",
+                                "code": "DA426CZ7JH5W68OD",
+                                "startDate": "2012-11-26T00:00:00Z",
+                                "endDate": "2012-11-30T00:00:00Z",
+                                "isExclusive": false,
+                                "isApprovalRequired": false,
+                                "created": "2012-11-27T01:08:54.16Z",
+                                "modified": "2012-11-27T01:09:23.127Z",
+                                "tags": []
+                                }
+                            </apigee:content>
+                        </apigee:payload>
+                    </representation>
+				</request>
+			</method>
+            <method id="deleteDiscount" name="DELETE" apigee:displayName="Delete Discount">
+				<apigee:tags>
+					<apigee:tag primary="true">Discount</apigee:tag>
+				</apigee:tags>
+				<apigee:authentication required="true" />
+				<apigee:example url="Discount/981df192-2e84-452b-ae18-1ce4cfc4b9a0" />
+				<doc title=""
+					apigee:url="http://mxmerchant.apiportal.apigee.com/api-docs">
+					Deletes a discount
+				</doc>
+			</method>
+        </resource>
+        
+        
+        <resource path="/Discount">
+            <method id="getAllDiscount" name="GET" apigee:displayName="Get all Discounts">
+				<apigee:tags>
+					<apigee:tag primary="true">Discount</apigee:tag>
+				</apigee:tags>
+				<apigee:authentication required="true" />
+				<apigee:example url="Discount?limit=10&amp;offset=0&amp;" />
+				<doc title=""
+					apigee:url="http://mxmerchant.apiportal.apigee.com/api-docs">
+					Returns all discounts
+				</doc>
+                <request>
+                    <param name="limit" required="false" style="query" type="xsd:int" default="10">
+                        <doc>The maximum number of records displayed</doc>
+                    </param>
+                    <param name="offset" required="false" style="query" type="xsd:int" default="0">
+                        <doc>The intial record number to start with</doc>
+                    </param>
+                </request>
+			</method>
+            
+            <method id="getAllDiscountMerc" name="GET" apigee:displayName="Get all Discounts for Merchant">
+				<apigee:tags>
+					<apigee:tag primary="true">Discount</apigee:tag>
+				</apigee:tags>
+				<apigee:authentication required="true" />
+				<apigee:example url="Discount?merchantId=0&amp;limit=10&amp;offset=0&amp;" />
+				<doc title=""
+					apigee:url="http://mxmerchant.apiportal.apigee.com/api-docs">
+					Returns list of discounts for specified merchant
+				</doc>
+                <request>
+                    <param name="merchantId" required="true" style="query" type="xsd:int">
+                        <doc>Merchant identification number</doc>
+                    </param>
+                    <param name="limit" required="false" style="query" type="xsd:int" default="10">
+                        <doc>The maximum number of records displayed</doc>
+                    </param>
+                    <param name="offset" required="false" style="query" type="xsd:int" default="0">
+                        <doc>The intial record number to start with</doc>
+                    </param>
+                </request>
+			</method>
+            
+            <method id="CreateDiscount" name="POST" apigee:displayName="Create Discount">
+                <apigee:tags>
+					<apigee:tag primary="true">Discount</apigee:tag>
+				</apigee:tags>
+				<apigee:authentication required="true" />
+				<apigee:example url="Discount?merchantId=100001333&amp;" />
+				<doc title=""
+					apigee:url="http://mxmerchant.apiportal.apigee.com/api-docs">
+					Create discount
+				</doc>
+				<request>
+                    <param name="Content-Type" required="true" style="header" default="application/json"/>
+                    <representation>
+                        <apigee:payload required="true">
+                            <doc apigee:url="http://mxmerchant.apiportal.apigee.com/api-docs">Discount object</doc>
+                            <apigee:content>
+                                {
+                                "dba": "PPS Demo",
+                                "discountType": "Order",
+                                "discountRateType": "Percent",
+                                "discountApplicationType": "Automatic",
+                                "name": "Stemless Flower Discount",
+                                "rate": "0.5",
+                                "startDate": "2012-11-26T00:00:00Z",
+                                "endDate": "2012-11-30T00:00:00Z",
+                                "isExclusive": false,
+                                "isApprovalRequired": false,
+                                "tags": []
+                                }
+                            </apigee:content>
+                        </apigee:payload>
+                    </representation>
+				</request>
+			</method>
+        </resource>
+        
+        <resource path="/Customer/{id}/Address">
+            <param name="id" required="true" style="template" type="xsd:string">
+                <doc>The guid id of the entire order </doc>
+            </param>
+            
+            <method id="getCustAddress" name="GET" apigee:displayName="Get Customer Address">
+                
+                <apigee:tags>
+                    <apigee:tag primary="true">Customer</apigee:tag>
+                </apigee:tags>
+                
+                <apigee:authentication required="true"/>
+                
+                <apigee:example url="Customer/00000000-0000-0000-0000-000000000000/
+                Address?subId=00000000-0000-0000-0000-000000000000"/>
+                
+                <doc title=""
+                    apigee:url="http://mxmerchant.apiportal.apigee.com/api-docs">
+                    Return the addresses for a customer.
+                </doc>
+                <request>
+                    <param name="subid" required="true" style="query" type="xsd:string">
+                        <doc>The guid id of a specific product within an order</doc>
+                    </param>
+                </request>
+            </method>
+            
+            <method id="deleteCustAddress" name="DELETE" apigee:displayName="Delete Customer Address">
+                <apigee:tags>
+                    <apigee:tag primary="true">Customer</apigee:tag>
+                </apigee:tags>
+                
+                <apigee:authentication required="true"/>
+                
+                <apigee:example url="Customer/00000000-0000-0000-0000-000000000000/
+                Address?subId=00000000-0000-0000-0000-000000000000"/>
+                
+                <doc title=""
+                    apigee:url="http://mxmerchant.apiportal.apigee.com/api-docs">
+                    Delete the addresses for a customer.
+                </doc>
+                <request>
+                    <param name="subid" required="true" style="query" type="xsd:string">
+                        <doc>The guid id of a specific product within an order</doc>
+                    </param>
+                </request>
+            </method>
+            
+            <method id="createCustAddress" name="POST" apigee:displayName="Create Customer Address">
+                <apigee:tags>
+                    <apigee:tag primary="true">Customer</apigee:tag>
+                </apigee:tags>
+                <apigee:authentication required="true" />
+                <apigee:example url="Customer/00000000-0000-0000-0000-000000000000" />
+                <doc title=""
+                    apigee:url="http://mxmerchant.apiportal.apigee.com/api-docs">
+                    Create Customer Address
+                </doc>
+                <request>
+                    <param name="Content-Type" required="true" style="header" default="application/json"/>
+                <representation>
+                    <apigee:payload required="true">
+                        <doc apigee:url="http://mxmerchant.apiportal.apigee.com/api-docs">Customer object</doc>
+                        <apigee:content>
+                            {
+                            addressLine1: "999 9th st",
+                            addressLine2: "unit 3",
+                            city: "atlanta",
+                            state: "GA", 
+                            zip: "12345", 
+                            country: "USA", 
+                            type: "Shipping"
+                            }
+                        </apigee:content>
+                    </apigee:payload>
+                </representation>
+                </request>
+            </method>
+            
+            <method id="updateCustAddress" name="PUT" apigee:displayName="Update Customer Address">
+                <apigee:tags>
+                    <apigee:tag primary="true">Customer</apigee:tag>
+                </apigee:tags>
+                <apigee:authentication required="true" />
+                <apigee:example url="Customer/00000000-0000-0000-0000-000000000000" />
+                <doc title=""
+                    apigee:url="http://mxmerchant.apiportal.apigee.com/api-docs">
+                    Update Customer Address
+                </doc>
+                <request>
+                    <param name="Content-Type" required="true" style="header" default="application/json"/>
+                    <representation>
+                        <apigee:payload required="true">
+                            <doc apigee:url="http://mxmerchant.apiportal.apigee.com/api-docs">Customer object</doc>
+                            <apigee:content>
+                                {
+                                addressLine1: "999 9th st",
+                                addressLine2: "unit 3",
+                                city: "atlanta",
+                                state: "GA",
+                                zip: "12345",
+                                country: "USA",
+                                type: "Shipping"
+                                }
+                            </apigee:content>
+                        </apigee:payload>
+                    </representation>
+                    </request>
+                </method>          
+        </resource>
+        <!--
+        <resource path="/Customer/{id}/PaymentMethod">
+            <param name="id" required="true" style="template" type="xsd:string">
+                <doc>The guid id of the entire order </doc>
+            </param>
+            
+            <method id="getCustPmntToken" name="GET" apigee:displayName="Get Customer Payment Tokens">
+				<apigee:tags>
+					<apigee:tag primary="true">Customer</apigee:tag>
+				</apigee:tags>
+				<apigee:authentication required="true" />
+				<apigee:example url="Customer/00000000-0000-0000-0000-000000000000/PaymentMethod?limit=10&amp;offset=0&amp;" />
+				<doc title=""
+					apigee:url="http://mxmerchant.apiportal.apigee.com/api-docs">
+					Get Customer Payment Tokens
+				</doc>
+				<request>
+                    <param name="limit" required="false" style="query" type="xsd:int" default="10">
+                        <doc>The maximum number of records displayed</doc>
+                    </param>
+                    <param name="offset" required="false" style="query" type="xsd:int" default="0">
+                        <doc>The intial record number to start with</doc>
+                    </param>
+				</request>
+			</method>
+            
+            <method id="getCustPmntMethod" name="GET" apigee:displayName="Get Customer Payment Method">
+				<apigee:tags>
+					<apigee:tag primary="true">Customer</apigee:tag>
+				</apigee:tags>
+				<apigee:authentication required="true" />
+				<apigee:example url="Customer/00000000-0000-0000-0000-000000000000/PaymentMethod?subId=00000000-0000-0000-0000-000000000000" />
+				<doc title=""
+					apigee:url="http://mxmerchant.apiportal.apigee.com/api-docs">
+					Get payment method by customer id
+				</doc>
+				<request>
+                    <param name="subid" required="true" style="query" type="xsd:string">
+                        <doc>The guid id of a specific product within an order</doc>
+                    </param>
+				</request>
+			</method>
+        </resource>-->
+             
+        <resource path="/Product">
+            <method id="getAllProducts" name="GET" apigee:displayName="Get all Products (Product Catalog)">
+                <apigee:tags>
+                    <apigee:tag primary="true">Product</apigee:tag>
+                </apigee:tags>
+                <apigee:authentication required="true"/>
+                
+                <apigee:example url="Product?merchantId=100001333&amp;limit=10&amp;offset=0&amp;includePhotos=false"/>
+                
+                <doc title="" apigee:url="http://mxmerchant.apiportal.apigee.com/api-docs">
+                    Get Product
+                </doc>
+                <request>
+                    <param name="merchantId" required="true" style="query" type="xsd:int">
+                        <doc>Merchant identification number</doc>
+                    </param>
+                    <param name="limit" required="false" style="query" type="xsd:int" default="10">
+                        <doc>The maximum number of records displayed</doc>
+                    </param>
+                    <param name="offset" required="false" style="query" type="xsd:int" default="0">
+                        <doc>The intial record number to start with</doc>
+                    </param>
+                    <param name="includePhotos" required="false" style="query" type="xsd:boolean" default="true">
+                        <doc>Include the associated photo with the product</doc>
+                    </param>
+                </request>
+            </method>
+            <method id="getProduct" name="GET" apigee:displayName="Get Product">
+                <apigee:tags>
+                    <apigee:tag primary="true">Product</apigee:tag>
+                </apigee:tags>
+                <apigee:authentication required="true"/>
+                
+                <apigee:example url="Product?merchantId=100001333&amp;value=apple&amp;limit=10&amp;offset=0&amp;includePhotos=false"/>
+                
+                <doc title="" apigee:url="http://mxmerchant.apiportal.apigee.com/api-docs">
+                    Searches specified merchant id
+                </doc>
+                <request>
+                    <param name="merchantId" required="true" style="query" type="xsd:int">
+                        <doc>Merchant identification number</doc>
+                    </param>
+                    <param name="value" required="true" style="query" type="xsd:stringt">
+                        <doc>The criteria, word,keyword/phrase being searched for</doc>
+                    </param>
+                    <param name="limit" required="false" style="query" type="xsd:int" default="10">
+                        <doc>The maximum number of records displayed</doc>
+                    </param>
+                    <param name="offset" required="false" style="query" type="xsd:int" default="0">
+                        <doc>The intial record number to start with</doc>
+                    </param>
+                    <param name="includePhotos" required="false" style="query" type="xsd:boolean" default="true">
+                        <doc>Include the associated photo with the product</doc>
+                    </param>
+                </request>
+            </method>
+            
+            <method id="createProduct" name="POST" apigee:displayName="Create Product">
+                <apigee:tags>
+					<apigee:tag primary="true">Product</apigee:tag>
+				</apigee:tags>
+				<apigee:authentication required="true" />
+				<apigee:example url="Product" />
+				<doc title=""
+					apigee:url="http://mxmerchant.apiportal.apigee.com/api-docs">
+					Create a Product
+				</doc>
+				<request>
+                    <param name="Content-Type" required="true" style="header" default="application/json"/>
+                    <representation>
+                        <apigee:payload required="true">
+                            <doc apigee:url="http://mxmerchant.apiportal.apigee.com/api-docs">Product object</doc>
+                            <apigee:content>
+                                {
+                                "productName": "deliciousItem",
+                                "description": "yummy",
+                                }
+                            </apigee:content>
+                        </apigee:payload>
+                    </representation>
+				</request>
+			</method>
+            
+            <method id="updateProduct" name="PUT" apigee:displayName="UpdateProduct">
+                <apigee:tags>
+					<apigee:tag primary="true">Product</apigee:tag>
+				</apigee:tags>
+				<apigee:authentication required="true" />
+				<apigee:example url="Product" />
+				<doc title=""
+					apigee:url="http://mxmerchant.apiportal.apigee.com/api-docs">
+					Update a Products information
+				</doc>
+				<request>
+                    
+                    <param name="Content-Type" required="true" style="header" default="application/json"/>
+                    <representation>
+                        <apigee:payload required="true">
+                            <doc apigee:url="http://mxmerchant.apiportal.apigee.com/api-docs">Product object</doc>
+                            <apigee:content>
+                                {
+                                "id":"11b44ff4-be9a-470d-ad18-0a5c7fcb07bc",
+                                "productName": "deliciosoItem",
+                                "description": "intenselyGood",
+                                }
+                            </apigee:content>
+                        </apigee:payload>
+                    </representation>
+				</request>
+			</method>
+
+        </resource>
+        
+        <resource path="/Product/{id}">
+            <param name="id" required="true" style="template" type="xsd:string">
+                <doc>The guid id of the desired resource</doc>
+            </param>
+            
+            <method id="getProduct" name="GET" apigee:displayName="Get Product">
+                <apigee:tags>
+                    <apigee:tag primary="true">Product</apigee:tag>
+                </apigee:tags>
+                <apigee:authentication required="true"/>
+                
+                <apigee:example url="Product/00000000-0000-0000-0000-000000000000"/>
+                
+                <doc title="" apigee:url="http://mxmerchant.apiportal.apigee.com/api-docs">
+                    Get Product
+                </doc>
+            </method>
+            
+            <method id="deleteProduct" name="DELETE" apigee:displayName="Delete Product">
+                <apigee:tags>
+                    <apigee:tag primary="true">Product</apigee:tag>
+                </apigee:tags>
+                <apigee:authentication required="true"/>
+                
+                <apigee:example url="Product/00000000-0000-0000-0000-000000000000"/>
+                
+                <doc title="" apigee:url="http://mxmerchant.apiportal.apigee.com/api-docs">
+                    Delete Product
+                </doc>
+            </method>
+            
+                 
+        </resource>
+             
+             
+             
+        
+
+	</resources>
+
+</application>
